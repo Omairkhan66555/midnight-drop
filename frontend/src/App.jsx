@@ -44,7 +44,7 @@ const ProductCard = ({ product, onPurchase }) => {
   const handleBuy = async () => {
     setPurchaseState('loading');
     try {
-      const res = await fetch('http://localhost:3000/api/purchase', {
+      const res = await fetch('https://midnight-drop.onrender.com/api/purchase', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: API_USER, productId: product.id })
@@ -133,7 +133,7 @@ const AdminPanel = ({ refreshTrigger }) => {
   const [form, setForm] = useState({ name: '', price: '', inventory: '', release_time: '', image: '' });
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/admin/orders')
+    fetch('https://midnight-drop.onrender.com/api/admin/orders')
       .then(res => res.json())
       .then(setOrders);
   }, [refreshTrigger]);
@@ -143,7 +143,7 @@ const AdminPanel = ({ refreshTrigger }) => {
     const isScheduled = !!form.release_time;
     const endpoint = isScheduled ? '/api/admin/schedule-product' : '/api/admin/add-product';
     
-    await fetch(`http://localhost:3000${endpoint}`, {
+    await fetch(`https://midnight-drop.onrender.com${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -159,7 +159,7 @@ const AdminPanel = ({ refreshTrigger }) => {
 
   if(!window.confirm("Delete this product?")) return;
 
-  await fetch(`http://localhost:3000/api/admin/product/${id}`, {
+  await fetch(`https://midnight-drop.onrender.com/api/admin/product/${id}`, {
     method: "DELETE"
   });
 
@@ -255,7 +255,7 @@ function App() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = () => {
-    fetch('http://localhost:3000/api/products')
+    fetch('https://midnight-drop.onrender.com/api/products')
       .then(res => res.json())
       .then(setProducts)
       .catch(console.error);
